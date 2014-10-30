@@ -15,6 +15,28 @@ if (!isset($_SESSION["plateau"])) {
             $_SESSION["plateau"][$i][$j] = true;
         }
     }
+
+    $_SESSION["plateau"][0][0] = false;
+    $_SESSION["plateau"][0][1] = false;
+    $_SESSION["plateau"][1][0] = false;
+    $_SESSION["plateau"][1][1] = false;
+
+    $_SESSION["plateau"][5][0] = false;
+    $_SESSION["plateau"][5][1] = false;
+    $_SESSION["plateau"][6][0] = false;
+    $_SESSION["plateau"][6][1] = false;
+
+    $_SESSION["plateau"][5][5] = false;
+    $_SESSION["plateau"][5][6] = false;
+    $_SESSION["plateau"][6][5] = false;
+    $_SESSION["plateau"][6][6] = false;
+
+    $_SESSION["plateau"][5][5] = false;
+    $_SESSION["plateau"][5][6] = false;
+    $_SESSION["plateau"][6][5] = false;
+    $_SESSION["plateau"][6][6] = false;
+
+
 }
 
 include("head.html");
