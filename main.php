@@ -8,6 +8,18 @@
 
 session_start();
 
+if ( !isset($_SESSION["command"])) {
+	$_SESSION["command"] = "debut";
+} else {
+	$_SESSION["command"] = "jeu";
+}
+
+if (isset($_GET["command"])) {
+	if ($_GET["command"] == "debut") {
+		$_SESSION["plateau"][$_GET["x"]][$_GET["y"]] = false;
+	}
+}
+
 if (!isset($_SESSION["plateau"])) {
     resetPlateau();
 }
@@ -51,15 +63,13 @@ echo "<table>\n";
 for ($i = 0; $i < 7; $i++) {
     echo "\t<tr>";
     for ($j = 0; $j < 7; $j++) {
-        echo "<td>";
-		echo $_SESSION["plateau"][$i][$j];
-        echo ($_SESSION["plateau"][$i][$j]) ? "<img src=\"pion.jpg\"/>" : "vide" ;
+		echo "<td>";
+        echo ($_SESSION["plateau"][$i][$j]) ? "<a href=\"main.php?x=$i&y=$j&command=" . $_SESSION["command"] ."\"><img src=\"pion.jpg\"/></a>" : "" ;
         echo "</td>";
     }
     echo "</tr>\n";
 }
 
 echo "</table>\n";
-
 
 include("bottom.html");
