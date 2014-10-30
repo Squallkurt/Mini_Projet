@@ -25,7 +25,7 @@ for ($i = 0; $i < 7; $i++) {
     echo "\t<tr>";
     for ($j = 0; $j < 7; $j++) {
         echo "<td>";
-        echo $_SESSION["plateau"][$i][$j];
+        echo ($_SESSION["plateau"][$i][$j]) ? "<img src=\"pion.jpg\"/>" : "vide" ;
         echo "</td>";
     }
     echo "</tr>\n";
