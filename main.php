@@ -115,6 +115,7 @@ function mouvementPossible($point1, $point2)
         if ($_SESSION["plateau"][$point1["x"]][$point1["y"] + $inc]) {
             $_SESSION["plateau"][$point1["x"]][$point1["y"] + $inc] = false;
             $_SESSION["plateau"][$point2["x"]][$point2["y"]] = false;
+            $_SESSION["plateau"][$point1["x"]][$point1["y"]] = true;
             return true;
         }
 
@@ -128,6 +129,7 @@ function mouvementPossible($point1, $point2)
         if ($_SESSION["plateau"][$point1["x"] + $inc][$point1["y"]]) {
             $_SESSION["plateau"][$point1["x"] + $inc][$point1["y"]] = false;
             $_SESSION["plateau"][$point2["x"]][$point2["y"]] = false;
+            $_SESSION["plateau"][$point1["x"]][$point1["y"]] = true;
             return true;
         }
     }
