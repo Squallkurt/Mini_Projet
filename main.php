@@ -19,6 +19,7 @@ if (isset($_GET["command"])) {
 // Pas de commande spécifiée ? Reset du plateau pour lancer le jeu
 if ($command == "") {
     resetPlateau();
+    $command = "debut";
 } else {
     // Si aucun mouvement possible on retourne le résultat c'est à dire gagné ou perdu
     if (aucunMouvementPossible()) {
@@ -107,18 +108,27 @@ function mouvementPossible($point1, $point2)
     // Déplacement vertical
     if ($point1["x"] == $point2["x"]) {
         if ($point1["y"] > $point2["y"]) {
-            if ($_SESSION["plateau"][$point1["x"]][$point1["y"] + 1]) {
-                $_SESSION["plateau"][$point1["x"]][$point1["y"] + 1] = false;
-                return true;
-            }
+            $inc = 1;
+        } else {
+            $inc = -1;
         }
+        if ($_SESSION["plateau"][$point1["x"]][$point1["y"] + $inc]) {
+            $_SESSION["plateau"][$point1["x"]][$point1["y"] + $inc] = false;
+            $_SESSION["plateau"][$point2["x"]][$point2["y"]] = false;
+            return true;
+        }
+
     } else {
         // Déplacement horizontal
         if ($point1["x"] > $point2["x"]) {
-            if ($_SESSION["plateau"][$point1["x"] + 1][$point1["y"]]) {
-                $_SESSION["plateau"][$point1["x"] + 1][$point1["y"]] = false;
-                return true;
-            }
+            $inc = 1;
+        } else {
+            $inc = -1;
+        }
+        if ($_SESSION["plateau"][$point1["x"] + $inc][$point1["y"]]) {
+            $_SESSION["plateau"][$point1["x"] + $inc][$point1["y"]] = false;
+            $_SESSION["plateau"][$point2["x"]][$point2["y"]] = false;
+            return true;
         }
     }
 }
@@ -126,9 +136,8 @@ function mouvementPossible($point1, $point2)
 // Fonction qui test si un mouvement est encore possible
 function aucunMouvementPossible()
 {
-    $_SESSION["pasDeMouvementPossible"] = true;
-    for ($i = 0; $i < 7; $i++) {
-        for ($j = 0; $j < 7; $j++) {
+    for ($i = 1; $i < 6; $i++) {
+        for ($j = 1; $j < 6; $j++) {
             if ($_SESSION["plateau"][$i][$j] == true) {
                 if (($_SESSION["plateau"][$i + 1][$j] == true) && ($_SESSION["plateau"][$i + 2][$j] == false)) {
                     return false;
