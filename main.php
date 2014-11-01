@@ -31,10 +31,13 @@ if ($command == "") {
         $_SESSION["plateau"][$_GET["x"]][$_GET["y"]] = false;
         $command = "choix";
     } else if ($command == "choix") {
-        // Pion choisi, on l'enregistre en session
-        $_SESSION["choix"] = array("x" => $_GET["x"], "y" => $_GET["y"]);
-        $command = "action";
+        // Pion choisi, on l'enregistre en session: on vérifie que l'on a cliqué sur un pion, et non sur une case vide
+        if (choixOk(array("x" => $_GET["x"], "y" => $_GET["y"]))) {
+            $_SESSION["choix"] = array("x" => $_GET["x"], "y" => $_GET["y"]);
+            $command = "action";
+        }
     } else if ($command == "action") {
+
         if (mouvementPossible(array("x" => $_GET["x"], "y" => $_GET["y"]), $_SESSION["choix"])) {
             $command = "choix";
         }
@@ -129,6 +132,16 @@ function mouvementPossible($point1, $point2)
     }
 }
 
+/**
+ * Vérifie que le point est jouable: il doit s'agir d'un pion
+ * @param $point Point à tester
+ * @return bool true si le point est un pion, sinon false
+ */
+function choixOk($point)
+{
+    return $_SESSION["plateau"][$point["x"]][$point["y"]];
+}
+
 // Fonction qui test si un mouvement est encore possible
 function aucunMouvementPossible()
 {
@@ -162,6 +175,9 @@ function aucunMouvementPossible()
 
             }
         }
+
+        // Si on arrive jusque là, c'est que l'on a trouvé aucune possibilité de mouvement
+        return true;
     }
 }
 
